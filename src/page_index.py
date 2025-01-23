@@ -14,7 +14,7 @@ def get(): return '''
             padding-left: 1em;
             }
     </style>
-    <div class="heading" align="right"> Hello, NAME </div>
+    <div class="heading" align="right"> Hello, NAME  </div>
 </body>
 
 
