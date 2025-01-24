@@ -1,23 +1,30 @@
 import cherrypy
 import os.path
 import random
+import datetime
 import mako.template
 import mako.lookup
+import page_signup 
 
 names = ["Michelangelo", "Donatello", "Raphael", "Leonardo"]
+time_list = []
+view_list = []
 
-images = ["..\\html\\logo.png","..\\html\\N2dS-Sc__400x400.jpg", "..\\html\\Untitled.png"]
+for i in range(10):
+    x = datetime.timedelta(minutes=random.randrange(8000))
+    hoursago = int( x.seconds / 3600 )
+    minutesago = round((x.seconds % 3600)/60)
+    if x.days!=1:
+        time_list.append(f"{x.days} days, {hoursago} hours, and {minutesago} minutes ago")
+    elif x.days==1:
+        time_list.append(f"{x.days} day, {hoursago} hours, and {minutesago} minutes ago")
 
-#we have modules for each page we're displaying 
-import page_index
-import page_signup 
-import page_posts
+    view_list.append(random.randint(0,300))
 
 PYPATH= os.path.dirname(__file__)
 lookup = mako.lookup.TemplateLookup(
     directories=[os.path.dirname(__file__)]
 )
-
 
 class App:
     @cherrypy.expose
@@ -30,9 +37,8 @@ class App:
         return page_signup.get()
     @cherrypy.expose
     def posts(self):
-        i = random.choice(images)
         t = lookup.get_template("page_posts.html")
-        return t.render(image = i)
+        return t.render(time_list = time_list, view_list = view_list)
         
 #the location where the main.py file is stored: The src folder
 srcdir = os.path.abspath(os.path.dirname(__file__))
