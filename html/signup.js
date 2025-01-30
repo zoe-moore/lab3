@@ -9,25 +9,40 @@ function check(){
     let password = document.getElementById("password").value;
     let at_count=0;
     let bday_obj = new Date(bday);
-    let bday_mil;
+    let banner = document.createElement("div");
+    document.body.appendChild(banner);
+
+    for(let i=0;i<email.length;i++)
+        {
+            if (email[i]=='@')
+              {  at_count++;  } 
+        }
+    
     
     if (email=="" || name=="" || bday==""|| password=="")
     {
-        alert("One or more fields left blank.");  
+        banner.classList.add("error");
+        banner.appendChild(document.createTextNode("One or more fields left blank."));
     }
 
-    for(let i=0;i<email.length;i++)
+    else if (at_count!=1 || email[0]=='@' || email[email.length-1]=='@')
     {
-        if (email[i]=='@')
-          {  at_count++;  } 
+         //alert("Invalid Email Address");S
+         banner.classList.add("error");
+         banner.appendChild(document.createTextNode("Invalid Email Address"));
     }
 
-    if (at_count!=1 || email[0]=='@' || email[email.length-1]=='@')
-        {alert("Invalid Email Address");}
-
-    if(bday_obj.getTime()>(Date.now()-13*365.25*24*60*60*1000))
+    else if(bday_obj.getTime()>(Date.now()-13*365.25*24*60*60*1000))
     {
-        alert("Invalid Birthdate");
+        banner.classList.add("error");
+        banner.appendChild(document.createTextNode("Invalid Birthdate"));
+    }
+
+    else
+    {
+        banner.classList.add("welcome");
+        banner.appendChild(document.createTextNode("Welcome"));
+
     }
 
 
