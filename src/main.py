@@ -4,7 +4,7 @@ import random
 import datetime
 import mako.template
 import mako.lookup
-import page_signup 
+#import page_signup 
 
 names = ["Michelangelo", "Donatello", "Raphael", "Leonardo"]
 time_list = []
@@ -34,7 +34,8 @@ class App:
         return t.render(name = n)
     @cherrypy.expose
     def signup(self):
-        return page_signup.get()
+        t = lookup.get_template("page_signup.html")
+        return t.render()
     @cherrypy.expose
     def posts(self):
         t = lookup.get_template("page_posts.html")
